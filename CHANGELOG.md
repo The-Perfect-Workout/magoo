@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0
+- Minimum PHP version 8.0
+- Upgrade psr/log, phpunit/phpunit, and squizlabs/php_codesniffer dependencies.
+
 ## 2.2.0
 - MagooLogger implements Psr\Log\LoggerInterface now. The magic function __call was replaced with the real functions of the interface. (thanks to @GordonGuenther)
 - Tests have been rewritten following AAA principals

@@ -3,8 +3,9 @@
 namespace Pachico\MagooTest\Mask;
 
 use Pachico\Magoo\Mask\Email;
+use PHPUnit\Framework\TestCase;
 
-class EmailTest extends \PHPUnit_Framework_TestCase
+class EmailTest extends TestCase
 {
 
     /**
@@ -12,7 +13,7 @@ class EmailTest extends \PHPUnit_Framework_TestCase
      */
     private $sut;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sut = new Email(['localReplacement' => '*', 'domainReplacement' => '*']);
     }
@@ -24,8 +25,8 @@ class EmailTest extends \PHPUnit_Framework_TestCase
                 'To donate write to ***@**********, please'],
             ['In case of dragons, report to dougal@mcguire.net', 'In case of dragons, report to ******@***********'],
             ['Booz expert: jack@hackett.org', 'Booz expert: ****@***********'],
-            ['To get more sandwitches, mail me at mrs@doyle.co.uk',
-                'To get more sandwitches, mail me at ***@***********'],
+            ['To get more sandwiches, mail me at mrs@doyle.co.uk',
+                'To get more sandwiches, mail me at ***@***********'],
             ['To report any of the above, contact me at bishop@brennan.biz',
                 'To report any of the above, contact me at ******@***********'],
             ['This is just a random string', 'This is just a random string'],

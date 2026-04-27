@@ -3,11 +3,12 @@
 namespace Pachico\MagooTest\Mask;
 
 use Pachico\Magoo\Mask\Creditcard;
+use PHPUnit\Framework\TestCase;
 
 /**
  * All credit card numbers have been randomly generated using http://www.getcreditcardnumbers.com/
  */
-class CreditCardTest extends \PHPUnit_Framework_TestCase
+class CreditCardTest extends TestCase
 {
 
     /**
@@ -15,7 +16,7 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
      */
     private $sut;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sut = new Creditcard;
     }

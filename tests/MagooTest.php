@@ -2,14 +2,16 @@
 
 namespace Pachico\MagooTest;
 
+use InvalidArgumentException;
 use Pachico\Magoo\Magoo;
+use PHPUnit\Framework\TestCase;
 
-class MagooTest extends \PHPUnit_Framework_TestCase
+class MagooTest extends TestCase
 {
 
     protected $sut;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sut = new Magoo();
     }
@@ -27,8 +29,8 @@ class MagooTest extends \PHPUnit_Framework_TestCase
 
         // Assert
         $this->assertSame(
-            $this->sut->getMasked('My foo email is roy@trenneman.com and my credit card is 6011792594656742'),
-            'My bar ***** is ***@_____________ and my credit card is ************6742'
+            'My bar ***** is ***@_____________ and my credit card is ************6742',
+            $this->sut->getMasked('My foo email is roy@trenneman.com and my credit card is 6011792594656742')
         );
     }
 
@@ -130,17 +132,12 @@ class MagooTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test that only strings can be passed to getMasked
-     *
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Message to be masked needs to string - array passed.
      */
     public function testGetMaskedThrowsExceptionIfWrongInput()
     {
-        // Arrange
-        
-        // Act
-        $this->sut->getMasked(['Not a string']);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Message to be masked needs to string - array passed.');
 
-        // Assert
+        $this->sut->getMasked(['Not a string']);
     }
 }

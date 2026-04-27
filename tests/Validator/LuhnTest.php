@@ -3,16 +3,16 @@
 namespace Pachico\MagooTest\Validator;
 
 use Pachico\Magoo\Validator\Luhn;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class LuhnTest extends PHPUnit_Framework_TestCase
+class LuhnTest extends TestCase
 {
     /**
      * @var Luhn
      */
     private $sut;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->sut = new Luhn();

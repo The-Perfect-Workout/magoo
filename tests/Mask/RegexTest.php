@@ -3,8 +3,9 @@
 namespace Pachico\MagooTest\Mask;
 
 use Pachico\Magoo\Mask\Regex;
+use PHPUnit\Framework\TestCase;
 
-class RegexTest extends \PHPUnit_Framework_TestCase
+class RegexTest extends TestCase
 {
 
     /**
@@ -12,12 +13,12 @@ class RegexTest extends \PHPUnit_Framework_TestCase
      */
     protected $sut;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->sut = new Regex(['replacement' => '*', 'regex' => '(\d+)']);
     }
 
-    public function dataProviderIntputExpectedOutput()
+    public function dataProviderInputExpectedOutput()
     {
         return [
             ['This string has 12345 digits, which is more than 6789',
@@ -28,7 +29,7 @@ class RegexTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider dataProviderIntputExpectedOutput
+     * @dataProvider dataProviderInputExpectedOutput
      *
      * @param string $input
      * @param string $expectedOutput

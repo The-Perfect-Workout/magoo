@@ -4,12 +4,12 @@ namespace Pachico\MagooTest;
 
 use Pachico\Magoo\Magoo;
 use Pachico\Magoo\MagooArray;
-use Pachico\MagooTest\Dummy;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class MagooArrayTest extends \PHPUnit_Framework_TestCase
+class MagooArrayTest extends TestCase
 {
-    
+
     public function testGetMaskedRedactsArrayCorrectly()
     {
         // Arrange

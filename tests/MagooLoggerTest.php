@@ -4,10 +4,10 @@ namespace Pachico\MagooTest;
 
 use Pachico\Magoo\Magoo;
 use Pachico\Magoo\MagooLogger;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
 
-class MagooLoggerTest extends PHPUnit_Framework_TestCase
+class MagooLoggerTest extends TestCase
 {
 
     /**
@@ -17,7 +17,7 @@ class MagooLoggerTest extends PHPUnit_Framework_TestCase
     private $logger;
     private $magoo;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

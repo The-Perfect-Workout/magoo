@@ -2,8 +2,8 @@
 
 namespace Pachico\Magoo;
 
-use Pachico\Magoo\MagooArray;
 use Psr\Log\LoggerInterface;
+use Stringable;
 
 /**
  * MagooLogger acts as a middleware between your application and a PSR3 logger
@@ -11,25 +11,12 @@ use Psr\Log\LoggerInterface;
  */
 class MagooLogger implements LoggerInterface
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private LoggerInterface $logger;
 
-    /**
-     * @var MaskManagerInterface
-     */
-    private $maskManager;
+    private MaskManagerInterface $maskManager;
 
-    /**
-     * @var MagooArray
-     */
-    private $magooArray;
+    private MagooArray $magooArray;
 
-    /**
-     * @param LoggerInterface $logger
-     * @param MaskManagerInterface $maskManager
-     */
     public function __construct(LoggerInterface $logger, MaskManagerInterface $maskManager)
     {
         $this->logger = $logger;
@@ -37,122 +24,75 @@ class MagooLogger implements LoggerInterface
         $this->magooArray = new MagooArray($maskManager);
     }
 
-    /**
-     * @return LoggerInterface
-     */
-    public function getLogger()
+    public function getLogger(): LoggerInterface
     {
         return $this->logger;
     }
 
-    /**
-     * @return MaskManagerInterface
-     */
-    public function getMaskManager()
+    public function getMaskManager(): MaskManagerInterface
     {
         return $this->maskManager;
     }
 
-    /**
-     * @param string $message
-     * @param array $context
-     */
-    public function emergency($message, array $context = array())
+    public function emergency(string|Stringable $message, array $context = []): void
     {
-        $maskedArguments = $this->maskLogArguments($message, $context);
-        call_user_func_array([$this->logger, 'emergency'], $maskedArguments);
+        [$maskedMessage, $maskedContext] = $this->maskLogArguments($message, $context);
+        $this->logger->emergency($maskedMessage, $maskedContext);
+    }
+
+    public function alert(string|Stringable $message, array $context = []): void
+    {
+        [$maskedMessage, $maskedContext] = $this->maskLogArguments($message, $context);
+        $this->logger->alert($maskedMessage, $maskedContext);
+    }
+
+    public function critical(string|Stringable $message, array $context = []): void
+    {
+        [$maskedMessage, $maskedContext] = $this->maskLogArguments($message, $context);
+        $this->logger->critical($maskedMessage, $maskedContext);
+    }
+
+    public function error(string|Stringable $message, array $context = []): void
+    {
+        [$maskedMessage, $maskedContext] = $this->maskLogArguments($message, $context);
+        $this->logger->error($maskedMessage, $maskedContext);
+    }
+
+    public function warning(string|Stringable $message, array $context = []): void
+    {
+        [$maskedMessage, $maskedContext] = $this->maskLogArguments($message, $context);
+        $this->logger->warning($maskedMessage, $maskedContext);
+    }
+
+    public function notice(string|Stringable $message, array $context = []): void
+    {
+        [$maskedMessage, $maskedContext] = $this->maskLogArguments($message, $context);
+        $this->logger->notice($maskedMessage, $maskedContext);
+    }
+
+    public function info(string|Stringable $message, array $context = []): void
+    {
+        [$maskedMessage, $maskedContext] = $this->maskLogArguments($message, $context);
+        $this->logger->info($maskedMessage, $maskedContext);
+    }
+
+    public function debug(string|Stringable $message, array $context = []): void
+    {
+        [$maskedMessage, $maskedContext] = $this->maskLogArguments($message, $context);
+        $this->logger->debug($maskedMessage, $maskedContext);
+    }
+
+    public function log($level, string|Stringable $message, array $context = []): void
+    {
+        [$maskedMessage, $maskedContext] = $this->maskLogArguments($message, $context);
+        $this->logger->log($level, $maskedMessage, $maskedContext);
     }
 
     /**
-     * @param string $message
-     * @param array $context
+     * @return array{0: string, 1: array}
      */
-    public function alert($message, array $context = array())
+    private function maskLogArguments(string|Stringable $message, array $context): array
     {
-        $maskedArguments = $this->maskLogArguments($message, $context);
-        call_user_func_array([$this->logger, 'alert'], $maskedArguments);
-    }
-
-    /**
-     * @param string $message
-     * @param array $context
-     */
-    public function critical($message, array $context = array())
-    {
-        $maskedArguments = $this->maskLogArguments($message, $context);
-        call_user_func_array([$this->logger, 'critical'], $maskedArguments);
-    }
-
-    /**
-     * @param string $message
-     * @param array $context
-     */
-    public function error($message, array $context = array())
-    {
-        $maskedArguments = $this->maskLogArguments($message, $context);
-        call_user_func_array([$this->logger, 'error'], $maskedArguments);
-    }
-
-    /**
-     * @param string $message
-     * @param array $context
-     */
-    public function warning($message, array $context = array())
-    {
-        $maskedArguments = $this->maskLogArguments($message, $context);
-        call_user_func_array([$this->logger, 'warning'], $maskedArguments);
-    }
-
-    /**
-     * @param string $message
-     * @param array $context
-     */
-    public function notice($message, array $context = array())
-    {
-        $maskedArguments = $this->maskLogArguments($message, $context);
-        call_user_func_array([$this->logger, 'notice'], $maskedArguments);
-    }
-
-    /**
-     * @param string $message
-     * @param array $context
-     */
-    public function info($message, array $context = array())
-    {
-        $maskedArguments = $this->maskLogArguments($message, $context);
-        call_user_func_array([$this->logger, 'info'], $maskedArguments);
-    }
-
-    /**
-     * @param string $message
-     * @param array $context
-     */
-    public function debug($message, array $context = array())
-    {
-        $maskedArguments = $this->maskLogArguments($message, $context);
-        call_user_func_array([$this->logger, 'debug'], $maskedArguments);
-    }
-
-    /**
-     * @param string $level
-     * @param string $message
-     * @param array $context
-     */
-    public function log($level, $message, array $context = array())
-    {
-        $maskedArguments = $this->maskLogArguments($message, $context);
-        array_unshift($maskedArguments, $level);
-        call_user_func_array([$this->logger, 'log'], $maskedArguments);
-    }
-
-    /**
-     * @param string $message
-     * @param array $context
-     *
-     * @return array Masked arguments
-     */
-    private function maskLogArguments($message, array $context)
-    {
-        return $this->magooArray->getMasked([$message, $context]);
+        return $this->magooArray->getMasked([(string) $message, $context]);
     }
 }
